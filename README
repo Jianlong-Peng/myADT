@@ -31,19 +31,19 @@ structs
 
 Attention
 =========
-1. macros `ADT_NEW_1` or `ADT_NEWC_1` or `ADT_NEW_2` or `ADT_NEWC_2` 
-   as defined in `adt_tools.h` can be used as an alternative constructor
+1. macros ADT_NEW_1 or ADT_NEWC_1 or ADT_NEW_2 or ADT_NEWC_2 
+   as defined in adt_tools.h can be used as an alternative constructor
    to create a ADT of simple built-in types, e.g. char, int, float, 
-   double, long etc. They will use copy and free function `adt_copy##type`
-   and `adt_free`. It makes coding a bit easier!
+   double, long etc. They will use copy and free function adt_copy##type
+   and adt_free. It makes coding a bit easier!
 
    for example:
    // to create a stack of int
-   `StackPtr s = ADT_NEW_1(int, stack_new);`
+   StackPtr s = ADT_NEW_1(int, stack_new);
    // to create an Array of int of length 20
-   `ArrayPtr a = ADT_NEWC_1(float, 20, array_new);`
+   ArrayPtr a = ADT_NEWC_1(float, 20, array_new);
    // to create an AVL-tree of double with 'cmp_func'
-   `AVLTreePtr at = ADT_NEW_2(double, avl_new, cmp_func);`
+   AVLTreePtr at = ADT_NEW_2(double, avl_new, cmp_func);
 
 2. As ADT types were implemented using void*, it's a bit indirect to
    use some functions for built-in type (e.g. char, int, float, double,
@@ -52,24 +52,24 @@ Attention
    is defined in 'adt_tools.h' for functions 'void func(ADT_type_p p, void *src)'.
 
    for example:
-   `MinMaxHeapPtr h = ADT_NEW_1(int, mheap_new);`
+   MinMaxHeapPtr h = ADT_NEW_1(int, mheap_new);
    ...
-   `for(int i=0; i<10; ++i)`
-   `    ADT_FUNC_1(int, mheap_insert, h, 2*i+1);`
+   for(int i=0; i<10; ++i)
+       ADT_FUNC_1(int, mheap_insert, h, 2*i+1);
    ...
    
    Besides, the macro 'ADT_FUNC_RET' and 'ADT_FUNC_RET_1' is for function
    'ReturnType func(ADT_type p, void *src)'
    
    for example:
-   `AVLTreePtr at = ADT_NEW_1(int, avl_new, cmp_func)`
-   `AVLNodePtr ret;`
+   AVLTreePtr at = ADT_NEW_1(int, avl_new, cmp_func)
+   AVLNodePtr ret;
    ...
-   `if(ADT_FUNC_RET_1(int, avl_has, 34, ret))`
-   `    // to do somthing`
+   if(ADT_FUNC_RET_1(int, avl_has, 34, ret))
+       // to do somthing
    OR
-   `ADT_FUNC_RET(int, avl_has, 34, ret);`
-   `// do something with 'ret'`
+   ADT_FUNC_RET(int, avl_has, 34, ret);
+   // do something with 'ret'
    
    Moreover, other useful macros were defined in corresponding header files
    as long as I thought it'll make coding easier.
