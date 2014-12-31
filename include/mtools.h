@@ -102,6 +102,7 @@ do { \
 
 #define CHECK_NULL_POINTER(p, func_name)
 #define CHECK_INDEX_OUT_OF_RANGE(expression, func_name)
+#define CHECK_EMPTY(expression, func_name)
 
 #endif
 
