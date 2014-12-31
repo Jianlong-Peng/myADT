@@ -1,0 +1,20 @@
+BASIC INFO
+==========
+
+in windows, just run `build.bat`, and a visual studio project will be created, 
+then double-click 'myADT.sln' to build the solution
+
+in linux/unix, 
+> mkdir build
+> cd build
+> cmake .. -DCMAKE_INSTALL_PREFIX=where-to-install
+> make ; make install
+(Debug or Release)
+
+
+OPTIONS
+=======
+-DCMAKE_INSTALL_PREFIX=where-to-install    specify the path to install the library
+-DDO_CHECK=ON                              enable checking, e.g. if passed null pointer
+                                           or index out of range etc.
+-DBUILD_SHARED=ON                          enable building shared library

@@ -1,0 +1,13 @@
+2014.08.02  stack was re-implemented using list instead!
+2014.08.03  vector was implemented using double-ended queue like structure
+            that is, support quickly add/delete element in the front of vector.
+2014.08.03  queue was re-implemented using list instead!
+2014.08.03  deque was re-implemented using list instead!
+2014.08.03  String
+2014.08.04  add [-DDO_CHECK] support in CMakeLists.txt
+2014.08.06  23-tree was implemented.
+2014.08.09  fixed bug for left and right rotation in mavl_tree.c
+2014.08.23  red-black tree was implemented
+2014.08.28  fixed bugs in m23_tree.c and mrb_tree.c
+2014.08.28  map is re-implemented using Red-Black tree
+2014.11.05  for AVL-tree, counting sub-tree height online instead of recording balance factor!

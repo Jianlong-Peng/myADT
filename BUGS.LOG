@@ -1,0 +1,4 @@
+2014.08.28      mavl_tree.c     balance factor was incorrect when the tree size is 27. tested using test_tree_tools.exe
+                                1 9 10 26 22 2 8 3 27 23 25 21 7 14 17 12 5 19 11 24 15 4 6 13 16 18 20
+fixed at 2014-11-05 by not recording balance factor, instead calculating sub-tree height online.
+

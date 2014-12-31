@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 2.6)
+
+PROJECT(myADT)
+
+option(BUILD_SHARED "enable shared build support" OFF)
+option(DO_CHECK "enable doing check NULL pointer and index out of range" OFF)
+if(DO_CHECK)
+    MESSAGE(STATUS "DO_CHECK is on")
+    add_definitions(-DDO_CHECK)
+endif(DO_CHECK)
+
+if(BUILD_SHARED)
+    SET(BUILD_TYPE SHARED)
+    add_definitions(-DUSING_DYNAMIC_LIBS)
+else()
+    SET(BUILD_TYPE STATIC)
+endif()
+
+if(MSVC)
+    SET(CMAKE_C_FLAGS_DEBUG "/W3 /MDd /D DEBUG /D DO_CHECK")
+    SET(CMAKE_C_FLAGS_RELEASE "/W3 /O2 /MD /D NDEBUG")
+    #MESSAGE(STATUS ${CMAKE_C_FLAGS_RELEASE})
+endif()
+if(CMAKE_COMPILER_IS_GNUCC)
+    SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -g -DDEBUG -DDO_CHECK")
+    SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall -O2 -DNDEBUG")
+    LINK_LIBRARIES(m)
+endif()
+
+SET(BIN_INSTALL_DIR bin)
+if(MSVC)
+    SET(LIB_INSTALL_DIR ${BIN_INSTALL_DIR})
+else()
+    SET(LIB_INSTALL_DIR lib)
+endif()
+
+SET(ADT_LIBRARY myADT)
+
+ADD_SUBDIRECTORY(include)
+ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(test)
+
+INSTALL(FILES README DESTINATION .)

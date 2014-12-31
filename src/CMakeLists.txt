@@ -1,0 +1,44 @@
+#EXEC_PROGRAM(ls ARGS "*.c" OUTPUT_VARIABLE myadt_srcs RETURN_VALUE LS_RETURN)
+#IF(LS_RETURN)
+#MESSAGE(FATAL_ERROR "couldn't find any .c files in " ${CMAKE_CURRENT_SOURCE_DIR})
+#ENDIF(LS_RETURN)
+
+set(myadt_srcs
+    mtools.c
+    m23_tree.c
+    marray.c
+    mavl_tree.c
+    mdeque.c
+    mheap.c
+    mlist.c
+    mmap.c
+    memory.c
+    mstring.c
+    mqueue.c
+    mrb_tree.c
+    msort.c
+    mstack.c
+    mvector.c
+    tree_tools.c)
+
+INCLUDE_DIRECTORIES("../include")
+ADD_DEFINITIONS(-DMAKE_DLL)
+
+ADD_LIBRARY(${ADT_LIBRARY} ${BUILD_TYPE} ${myadt_srcs})
+if(CMAKE_COMPILER_IS_GNUC)
+    TARGET_LINK_LIBRARIES(${ADT_LIBRARY} m)
+endif()
+
+INSTALL(TARGETS ${ADT_LIBRARY} ${ADT_LIBRARY}
+    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+)
+
+#ADD_LIBRARY(${ADT_LIBRARY}_static STATIC ${myadt_srcs})
+#ADD_LIBRARY(${ADT_LIBRARY} SHARED ${myadt_srcs})
+#SET_TARGET_PROPERTIES(${ADT_LIBRARY}_static PROPERTIES OUTPUT_NAME ${ADT_LIBRARY})
+#SET_TARGET_PROPERTIES(${ADT_LIBRARY} PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+#SET_TARGET_PROPERTIES(${ADT_LIBRARY}_static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+
+
