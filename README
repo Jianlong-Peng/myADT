@@ -74,6 +74,9 @@ Attention
    Moreover, other useful macros were defined in corresponding header files
    as long as I thought it'll make coding easier.
 
+Attention
+=========
+Need more thoroughly tests, especially complex data structures, e.g. vector of vector
 
 AUTHOR
 ======
