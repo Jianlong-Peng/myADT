@@ -6,7 +6,7 @@
 #     HomePage: 
 #      Version: 0.0.1
 #      Created: 2014-08-03 22:02:45
-#   LastChange: 2014-08-04 12:05:20
+#   LastChange: 2015-02-15 14:11:39
 #      History: 
 #=============================================================================*/
 #ifndef  MY_MSTRING_H_INC
@@ -57,6 +57,8 @@ void string_set(StringPtr s, char c, int i);
 
 // return Vector of String
 VectorPtr string_split(const StringPtr s, char sep);
+
+void string_reverse(StringPtr s);
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // the following function is for c-style string
