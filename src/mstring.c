@@ -6,7 +6,7 @@
 #     HomePage: 
 #      Version: 0.0.1
 #      Created: 2014-08-03 22:14:19
-#   LastChange: 2014-08-06 21:40:03
+#   LastChange: 2015-02-15 14:14:00
 #      History: 
 #=============================================================================*/
 #include <string.h>
@@ -180,6 +180,19 @@ VectorPtr string_split(const StringPtr s, char sep)
         beg = end + 1;
     }
     return vs;
+}
+
+void string_reverse(StringPtr s)
+{
+    if(s->_size == 0)
+        return;
+    char *q = s->_s + (s->_size-1);
+    char *p = s->_s;
+    while(p < q) {
+        char *a = *p;
+        *p++ = *q;
+        *q-- = *a;
+    }
 }
 
 VectorPtr cstr_split(const char *s, char sep)
