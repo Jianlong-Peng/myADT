@@ -6,7 +6,7 @@
 #     HomePage: 
 #      Version: 0.0.1
 #      Created: 2014-08-03 22:02:45
-#   LastChange: 2015-02-15 14:11:39
+#   LastChange: 2015-06-07 21:08:57
 #      History: 
 #=============================================================================*/
 #ifndef  MY_MSTRING_H_INC
@@ -49,8 +49,11 @@ void string_expand_cstr(StringPtr s1, const char *s2);
 
 // if not found, return string_size(s)
 size_t string_char(const StringPtr s, char c);
+int *calc_failure(const char *s, int n);
 size_t string_find(const StringPtr s1, const StringPtr s2);
+size_t string_find_v2(const StringPtr s1, const StringPtr s2, const int *failure);
 size_t string_find_cstr(const StringPtr s1, const char *s2);
+size_t string_find_cstr_v2(const StringPtr s1, const char *s2, const int *failure);
 
 char string_get(const StringPtr s, int i);
 void string_set(StringPtr s, char c, int i);

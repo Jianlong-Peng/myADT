@@ -6,7 +6,7 @@
 #     HomePage: 
 #      Version: 0.0.1
 #      Created: 2014-08-03 22:14:19
-#   LastChange: 2015-02-15 14:14:00
+#   LastChange: 2015-06-07 21:10:46
 #      History: 
 #=============================================================================*/
 #include <string.h>
@@ -120,17 +120,76 @@ size_t string_char(const StringPtr s, char c)
     return i;
 }
 
-// KMP algorithm
-size_t string_find(const StringPtr s1, const StringPtr s2)
+// KMP algorithm - O(m+n)
+int *calc_failure(const char *s, int n)
 {
-    ERROR_NOT_IMPLEMENTED("string_find");
+    int i,j;
+    int *failure = (int*)malloc(sizeof(int)*n);
+    failure[0] = -1;
+    for(j=1; j<n; ++j) {
+        i = failure[j-1];
+        while((s[j]!=s[i+1]) && (i>=0))
+            i = failure[i];
+        if(s[j] == s[i+1])
+            failure[j] = i+1;
+        else
+            failure[j] = -1;
+    }
+    return failure;
 }
-
-// KMP algorithm
 size_t string_find_cstr(const StringPtr s1, const char *s2)
 {
-    ERROR_NOT_IMPLEMENTED("string_find_cstr");
+    int *failure = calc_failure(s2, lastp);
+    size_t val = string_find_cstr_v2(s1, s2, failure);
+    free(failure);
+    return val;
 }
+size_t string_find_cstr_v2(const StringPtr s1, const char *s2, const int *failure)
+{
+    size_t i, j;
+    size_t lasts = s1->_size, lastp = strlen(s2);
+
+    while(i<lasts && j<lastp) {
+        if(s1->_s[i] == s2[j])
+            ++i; ++j;
+        else {
+            if(j == 0) i = 0;
+            else i = failure[j-1] + 1;
+        }
+    }
+    return (j==lastp)?(i-lastp):lasts;
+}
+
+size_t string_find_v2(const StringPtr s1, const StringPtr s2, const int *failure)
+{
+    return string_find_cstr_v2(s1, s2->_s, failure);
+}
+size_t string_find(const StringPtr s1, const StringPtr s2)
+{
+    return string_find_cstr(s1, s2->_s);
+}
+
+/*
+// O(m*n)
+size_t string_find_cstr(const StringPtr s1, const char *s2)
+{
+    size_t i,j,start;
+    size_t lasts = s1->_size, lastp = strlen(s2);
+
+    for(i=0; i<lasts-lastp; ++i) {
+        for(j=0,start=i; j<lastp && s1->_s[start]==s2[j]; ++j,++start)
+            ;
+        if(j == lastp)
+            return i;
+    }
+    return lasts;
+}
+
+size_t string_find(const StringPtr s1, const StringPtr s2)
+{
+    return string_find_cstr(s1, s2->_s);
+}
+*/
 
 char string_get(const StringPtr s, int i)
 {
