@@ -11,3 +11,4 @@
 2014.08.28  fixed bugs in m23_tree.c and mrb_tree.c
 2014.08.28  map is re-implemented using Red-Black tree
 2014.11.05  for AVL-tree, counting sub-tree height online instead of recording balance factor!
+2015.06.07  implement KMP for string pattern match
