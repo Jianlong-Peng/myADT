@@ -6,7 +6,7 @@
 #     HomePage: 
 #      Version: 0.0.1
 #      Created: 2014-08-03 22:14:19
-#   LastChange: 2015-06-07 21:10:46
+#   LastChange: 2015-06-07 21:50:12
 #      History: 
 #=============================================================================*/
 #include <string.h>
@@ -36,6 +36,7 @@ StringPtr string_from_cstr(const char *s)
     StringPtr s2 = string_new();
     NEWC(s2->_s, strlen(s));
     memcpy(s2->_s, s, strlen(s));
+    s2->_size = strlen(s);
     return s2;
 }
 
@@ -46,7 +47,7 @@ StringPtr string_copy(const StringPtr s)
     NEWC(s2->_s, s->_size);
     memcpy(s2->_s, s->_s, s->_size);
 
-	return s2;
+    return s2;
 }
 
 void string_free(StringPtr *s)
@@ -121,7 +122,7 @@ size_t string_char(const StringPtr s, char c)
 }
 
 // KMP algorithm - O(m+n)
-int *calc_failure(const char *s, int n)
+static int *calc_failure(const char *s, int n)
 {
     int i,j;
     int *failure = (int*)malloc(sizeof(int)*n);
@@ -137,23 +138,32 @@ int *calc_failure(const char *s, int n)
     }
     return failure;
 }
+int *calc_failure_string(const StringPtr s1)
+{
+    return calc_failure(s1->_s, s1->_size);
+}
+int *calc_failure_cstr(const char *s)
+{
+    return calc_failure(s, strlen(s));
+}
 size_t string_find_cstr(const StringPtr s1, const char *s2)
 {
-    int *failure = calc_failure(s2, lastp);
+    int *failure = calc_failure_cstr(s2);
     size_t val = string_find_cstr_v2(s1, s2, failure);
     free(failure);
     return val;
 }
 size_t string_find_cstr_v2(const StringPtr s1, const char *s2, const int *failure)
 {
-    size_t i, j;
+    size_t i=0, j=0;
     size_t lasts = s1->_size, lastp = strlen(s2);
 
     while(i<lasts && j<lastp) {
-        if(s1->_s[i] == s2[j])
-            ++i; ++j;
-        else {
-            if(j == 0) i = 0;
+        if(s1->_s[i] == s2[j]) {
+            ++i;
+            ++j;
+        } else {
+            if(j == 0) ++i;
             else i = failure[j-1] + 1;
         }
     }
@@ -243,14 +253,17 @@ VectorPtr string_split(const StringPtr s, char sep)
 
 void string_reverse(StringPtr s)
 {
+    char *q, *p;
+
     if(s->_size == 0)
         return;
-    char *q = s->_s + (s->_size-1);
-    char *p = s->_s;
+
+    q = s->_s + (s->_size-1);
+    p = s->_s;
     while(p < q) {
-        char *a = *p;
+        char a = *p;
         *p++ = *q;
-        *q-- = *a;
+        *q-- = a;
     }
 }
 

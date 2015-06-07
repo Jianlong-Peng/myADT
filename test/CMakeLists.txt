@@ -4,6 +4,7 @@ SET(test_files
     test_heap
     test_vector
     test_stack
+    test_string
 )
 
 if(MSVC)
